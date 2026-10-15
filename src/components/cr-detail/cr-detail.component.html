@@ -57,7 +57,7 @@
 				Approve
 			</button>
 
-			<div class="cr-actions__reject" *ngIf="canReject">
+			<div class="cr-actions__reject">
 				<label>
 					Reason for rejection
 					<textarea class="cr-actions__reason" [formControl]="rejectControl" [readonly]="!canReject || submitting"></textarea>

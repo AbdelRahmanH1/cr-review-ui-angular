@@ -31,4 +31,23 @@ describe('CrDetailComponent', () => {
 		const approveBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.cr-actions__approve');
 		expect(approveBtn.disabled).toBe(true);
 	});
+
+	it('lists the timeline oldest-first', async () => {
+		const fixture = await render(users.approver, 'CR-1'); 
+
+		const entries: HTMLElement[] = Array.from(fixture.nativeElement.querySelectorAll('.cr-timeline__action'));
+		expect(entries.map((e) => e.textContent!.trim())).toEqual(['CREATE', 'SUBMIT', 'SEND_FOR_APPROVAL']);
+	})
+
+	it('disables Reject for a read-only viewer', async () => {
+		const fixture = await render(users.viewer, 'CR-1');
+		const rejectBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.cr-actions__reject-btn');
+		expect(rejectBtn.disabled).toBe(true);
+	});
+
+	it('enables Approve for an approver on a pending CR', async () => {
+		const fixture = await render(users.approver, 'CR-1');
+		const approveBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.cr-actions__approve');
+		expect(approveBtn.disabled).toBe(false);
+	});
 });
