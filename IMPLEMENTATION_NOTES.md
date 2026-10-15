@@ -12,6 +12,9 @@
  - Status filter in cr-list.component.ts: visibleRows shows all CRs when the filter is ALL, otherwise it shows only CRs with the selected status. The original data stays unchanged.
  - No-match message in cr-list.component.html: If no CRs match the selected filter, the table is hidden and a message is shown. This is different from the empty state, where the API returns no CRs at all.
 
+ ## task 3
+ - Timeline in cr-detail.component.ts: The audit entries were shown newest first. I changed the order to oldest first and used a copy so the original data stays unchanged.
+
 ## 2. Component & state model
 - Change Request List: Loads the current organization's CRs and displays them in a table. It handles loading, loaded, empty, and error states, with a Retry button on error. Users can filter by status and click a row to view its details.
 - Change Request Detail: Loads a single CR through CrApiService, using the user from SessionService, and stores it in a ViewState<CrDetail>. The template handles each state based on state.status. Once loaded, it displays the status, baseline and new totals with the delta, a per-SKU diff table, and an approval timeline.
