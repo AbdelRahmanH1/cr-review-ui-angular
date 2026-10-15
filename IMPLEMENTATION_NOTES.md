@@ -14,7 +14,6 @@
 - Approve/Reject: Actions are available based on the CR's status and the user's permissions. Action state (submitting, actionError, and the reject-reason control) is kept separate from the loaded data.
 
 
-
 ## 3. Invariants I keep
 <!-- Which properties the UI guarantees, and where in the component/template each is enforced. -->
 
