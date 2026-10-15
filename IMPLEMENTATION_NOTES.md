@@ -8,6 +8,9 @@
  - diff misclassification in **diff.ts**: The function only checked unitPrice to decide whether a line had changed. I added quantity to the comparison because changes in quantity should also count as a change.
  - Approve/Reject permissions in cr-detail.component.ts: The buttons only checked the CR status, so read-only users (cr_r_o) could still approve pending CRs. I updated both getters to also check canApprovePolicy from common/permissions.ts. I used the same permission for Reject because there is no separate reject permission.
 
+ ## task 2
+ - Status filter in cr-list.component.ts: visibleRows shows all CRs when the filter is ALL, otherwise it shows only CRs with the selected status. The original data stays unchanged.
+ - No-match message in cr-list.component.html: If no CRs match the selected filter, the table is hidden and a message is shown. This is different from the empty state, where the API returns no CRs at all.
 
 ## 2. Component & state model
 - Change Request List: Loads the current organization's CRs and displays them in a table. It handles loading, loaded, empty, and error states, with a Retry button on error. Users can filter by status and click a row to view its details.
