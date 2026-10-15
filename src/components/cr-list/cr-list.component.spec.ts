@@ -3,6 +3,7 @@ import { CrListComponent } from './cr-list.component';
 import { SessionService } from '../../session/session.service';
 import { users } from '../../api/fixtures';
 import { ReqUser } from '../../models/cr.models';
+import { CrApiService } from '../../api/cr-api.service';
 
 const flush = () => new Promise((r) => setTimeout(r, 0));
 
@@ -29,5 +30,45 @@ describe('CrListComponent', () => {
 		const fixture = await render({ id: 'x', orgCode: 'org-empty', policies: ['cr_r_o'] });
 		expect(fixture.nativeElement.querySelector('.cr-list__empty')).not.toBeNull();
 		expect(fixture.nativeElement.querySelector('.cr-list__table')).toBeNull();
+	});
+
+	it('shows an error with a Retry button when loading fails', async () => {
+		const fixture = await render(users.approver);
+		TestBed.inject(CrApiService).failNext = true;
+
+		void fixture.componentInstance.load(); 
+		await flush();
+		fixture.detectChanges();
+
+		expect(fixture.nativeElement.querySelector('.cr-list__error').textContent).toContain('Network error');
+		expect(fixture.nativeElement.querySelector('.cr-list__error button')).not.toBeNull();
+		expect(fixture.nativeElement.querySelector('.cr-list__table')).toBeNull();
+	});
+
+	it('shows every row again when switching back to ALL', async () => {
+		const fixture = await render(users.approver);
+		const select: HTMLSelectElement = fixture.nativeElement.querySelector('.cr-list__filter');
+
+		select.value = 'APPLIED';
+		select.dispatchEvent(new Event('change'));
+		fixture.detectChanges();
+		expect(fixture.nativeElement.querySelectorAll('.cr-list__row').length).toBe(1);
+
+		select.value = 'ALL';
+		select.dispatchEvent(new Event('change'));
+		fixture.detectChanges();
+		expect(fixture.nativeElement.querySelectorAll('.cr-list__row').length).toBe(3);
+	});
+
+	it('shows a "no match" message when nothing matches the filter', async () => {
+		const fixture = await render(users.approver);
+
+		const select: HTMLSelectElement = fixture.nativeElement.querySelector('.cr-list__filter');
+		select.value = 'REJECTED';
+		select.dispatchEvent(new Event('change'));
+		fixture.detectChanges();
+
+		expect(fixture.nativeElement.querySelectorAll('.cr-list__row').length).toBe(0);
+		expect(fixture.nativeElement.querySelector('.cr-list__no-matches')).not.toBeNull();
 	});
 });
