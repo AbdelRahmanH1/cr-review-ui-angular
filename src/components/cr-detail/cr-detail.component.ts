@@ -29,7 +29,6 @@ export class CrDetailComponent implements OnInit {
 	state: ViewState<CrDetail> = idle();
 	submitting = false;
 	actionError?: string;
-	// TODO: add validation so the form is invalid until a reason is entered.
 	rejectControl = new FormControl('', { nonNullable: true, validators: [reasonRequired] });
 
 	constructor(private readonly api: CrApiService, private readonly session: SessionService) {}
