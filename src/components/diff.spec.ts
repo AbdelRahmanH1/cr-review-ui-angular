@@ -21,4 +21,20 @@ describe('computeDiff', () => {
 		const rows = computeDiff(base, [{ ...base[0], quantity: 11 }, base[1]]);
 		expect(rows.find((r) => r.sku === 'SKU-A')?.kind).toBe('changed');
 	});
+
+	it('reports identical lists as all unchanged', () => {
+		const rows = computeDiff(base, base.map((item) => ({ ...item })));
+		expect(rows.map((r) => r.kind)).toEqual(['unchanged', 'unchanged']);
+	});
+
+	it('returns no rows for two empty lists', () => {
+		expect(computeDiff([], [])).toEqual([]);
+	});
+
+	it('keeps the baseline and proposed items on a changed row', () => {
+		const proposed = { ...base[0], quantity: 11 };
+		const row = computeDiff(base, [proposed, base[1]]).find((r) => r.sku === 'SKU-A');
+		expect(row?.baseline).toEqual(base[0]);
+		expect(row?.proposed).toEqual(proposed);
+	});
 });
