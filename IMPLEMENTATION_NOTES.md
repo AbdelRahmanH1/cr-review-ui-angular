@@ -1,8 +1,5 @@
 # Implementation Notes
 
-> Fill this in as part of your submission. 1–2 pages, bullet points are fine. Delete these
-> instructions before submitting.
-
 ## 1. What I changed
  ## task 1
  - diff misclassification in **diff.ts**: The function only checked unitPrice to decide whether a line had changed. I added quantity to the comparison because changes in quantity should also count as a change.
@@ -27,10 +24,16 @@
 
 
 ## 3. Invariants I keep
-<!-- Which properties the UI guarantees, and where in the component/template each is enforced. -->
 
 | Invariant | How / where |
 |---|---|
+| Approve/Reject are only enabled for a pending CR AND a user with an approve-scope policy | `canApprove` / `canReject` and the template |
+| No duplicate requests at the same time | `submitting` flag |
+| Reject needs a reason | `rejectControl` validation |
+| Failed actions don't update the view; an error is shown instead | `state` updates only on success; `actionError` is set on failure |
+| `submitting` always resets | `finally` block |
+| Timeline shows oldest entries first | `timeline` getter |
+| Filtering doesn't change the original list | `visibleRows` returns a new array |
 
 ## 4. Testing strategy
  - List and detail tests: Checked the rendered UI, including the list rows, empty/error states, Retry button, status filter, no-match message, title, timeline order, and Approve/Reject permissions
@@ -45,7 +48,12 @@
 - I kept the action buttons visible but disabled them for users who can’t approve or reject, with a message explaining why.
 
 ## 6. Where I used AI
--
+- I used Claude (chat) to break the assignment into tasks and to help with Angular 15 syntax, since it uses the older APIs (no Signals or newer features).
+- It helped me find the root causes of the two failing tests and drafted parts of the list filter, the Approve/Reject logic, and the tests. I simplified some of it.
+- It also helped structure these notes.
+- I ran the tests and reviewed every change before committing, and I can explain and modify any part of the code.
 
 ## 7. What I'd improve with more time
--
+- Add tests for Approve/Reject and reject-reason validation.
+- Add more tests for the detail page, including loading, errors, diff, and totals.
+
