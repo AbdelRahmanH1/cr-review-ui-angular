@@ -17,6 +17,9 @@
  - Approve/Reject: Both actions check permissions and prevent multiple requests at the same time. On success, I update the CR data. On failure, I show an error and keep the current data.
  - Reject validation: I made the reason required and reject blank or spaces-only input. I trim the reason before sending it and clear the field only if the request succeeds
 
+ ## task 4
+ - Approve/Reject buttons: Both buttons are always shown but disabled if the user has no permission or the CR is no longer pending. A message explains why
+
 ## 2. Component & state model
 - Change Request List: Loads the current organization's CRs and displays them in a table. It handles loading, loaded, empty, and error states, with a Retry button on error. Users can filter by status and click a row to view its details.
 - Change Request Detail: Loads a single CR through CrApiService, using the user from SessionService, and stores it in a ViewState<CrDetail>. The template handles each state based on state.status. Once loaded, it displays the status, baseline and new totals with the delta, a per-SKU diff table, and an approval timeline.
@@ -38,6 +41,7 @@
 - I used the same permission for Reject and Approve because there is no separate reject permission in permissions.ts.
 - The diff checks changes in quantity and unit price, but not description changes (like CR-2). I use the totals and delta provided by the API.
 - If Approve or Reject fails, I keep the current CR data and show an error. However, the mock API may update the CR before returning an error, so reloading could show the new status.
+- I kept the action buttons visible but disabled them for users who can’t approve or reject, with a message explaining why.
 
 ## 6. Where I used AI
 -
