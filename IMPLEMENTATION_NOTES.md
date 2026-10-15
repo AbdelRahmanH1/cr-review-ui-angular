@@ -33,9 +33,10 @@
 |---|---|
 
 ## 4. Testing strategy
-<!-- What you tested (component/DOM vs pure) and why; what you deliberately skipped given the budget. -->
-
--
+ - List and detail tests: Checked the rendered UI, including the list rows, empty/error states, Retry button, status filter, no-match message, title, timeline order, and Approve/Reject permissions
+ - Diff tests: Tested added and removed items, quantity changes, identical and empty lists, and keeping both versions of a changed item.
+ - The tests use the mock API, so they don't need real network requests or long waits.
+ - Not tested automatically: Approve/Reject flows, reject-reason validation, diff and totals display, loading/error states on the detail page, and the permission hint. I checked these manually instead because of the time limit
 
 ## 5. Assumptions
 - I used the same permission for Reject and Approve because there is no separate reject permission in permissions.ts.
