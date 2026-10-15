@@ -14,6 +14,8 @@
 
  ## task 3
  - Timeline in cr-detail.component.ts: The audit entries were shown newest first. I changed the order to oldest first and used a copy so the original data stays unchanged.
+ - Approve/Reject: Both actions check permissions and prevent multiple requests at the same time. On success, I update the CR data. On failure, I show an error and keep the current data.
+ - Reject validation: I made the reason required and reject blank or spaces-only input. I trim the reason before sending it and clear the field only if the request succeeds
 
 ## 2. Component & state model
 - Change Request List: Loads the current organization's CRs and displays them in a table. It handles loading, loaded, empty, and error states, with a Retry button on error. Users can filter by status and click a row to view its details.
@@ -33,9 +35,9 @@
 -
 
 ## 5. Assumptions
-<!-- Where the requirements left room for interpretation, the calls you made and why. -->
-
--
+- I used the same permission for Reject and Approve because there is no separate reject permission in permissions.ts.
+- The diff checks changes in quantity and unit price, but not description changes (like CR-2). I use the totals and delta provided by the API.
+- If Approve or Reject fails, I keep the current CR data and show an error. However, the mock API may update the CR before returning an error, so reloading could show the new status.
 
 ## 6. Where I used AI
 -
