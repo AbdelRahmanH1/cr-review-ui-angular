@@ -4,7 +4,8 @@
 > instructions before submitting.
 
 ## 1. What I changed
-
+ ## task 1
+ - diff misclassification in **diff.ts**: The function only checked unitPrice to decide whether a line had changed. I added quantity to the comparison because changes in quantity should also count as a change.
 
 
 
