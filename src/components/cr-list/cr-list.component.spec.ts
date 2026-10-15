@@ -36,7 +36,7 @@ describe('CrListComponent', () => {
 		const fixture = await render(users.approver);
 		TestBed.inject(CrApiService).failNext = true;
 
-		void fixture.componentInstance.load(); 
+		void fixture.componentInstance.load();
 		await flush();
 		fixture.detectChanges();
 

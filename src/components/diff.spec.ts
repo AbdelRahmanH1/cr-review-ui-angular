@@ -23,7 +23,10 @@ describe('computeDiff', () => {
 	});
 
 	it('reports identical lists as all unchanged', () => {
-		const rows = computeDiff(base, base.map((item) => ({ ...item })));
+		const rows = computeDiff(
+			base,
+			base.map((item) => ({ ...item })),
+		);
 		expect(rows.map((r) => r.kind)).toEqual(['unchanged', 'unchanged']);
 	});
 

@@ -33,11 +33,11 @@ describe('CrDetailComponent', () => {
 	});
 
 	it('lists the timeline oldest-first', async () => {
-		const fixture = await render(users.approver, 'CR-1'); 
+		const fixture = await render(users.approver, 'CR-1');
 
 		const entries: HTMLElement[] = Array.from(fixture.nativeElement.querySelectorAll('.cr-timeline__action'));
-		expect(entries.map((e) => e.textContent!.trim())).toEqual(['CREATE', 'SUBMIT', 'SEND_FOR_APPROVAL']);
-	})
+		expect(entries.map((e) => e.textContent?.trim())).toEqual(['CREATE', 'SUBMIT', 'SEND_FOR_APPROVAL']);
+	});
 
 	it('disables Reject for a read-only viewer', async () => {
 		const fixture = await render(users.viewer, 'CR-1');

@@ -75,36 +75,36 @@ export class CrDetailComponent implements OnInit {
 	}
 
 	async approve(): Promise<void> {
-		if(this.submitting || !this.canApprove) return;
+		if (this.submitting || !this.canApprove) return;
 		this.submitting = true;
 		this.actionError = undefined;
-		try{
+		try {
 			const update = await this.api.approve(this.session.user, this.id, new Date().toISOString());
-			this.state = {status:'loaded',data:update};
-		}catch(err){
+			this.state = { status: 'loaded', data: update };
+		} catch (err) {
 			this.actionError = (err as Error).message;
-		}finally{
+		} finally {
 			this.submitting = false;
 		}
 	}
 
 	async reject(): Promise<void> {
-		if(this.submitting || !this.canReject) return;
+		if (this.submitting || !this.canReject) return;
 
 		this.rejectControl.markAllAsTouched();
-		if(this.rejectControl.invalid) return;
+		if (this.rejectControl.invalid) return;
 
 		this.submitting = true;
 		this.actionError = undefined;
 
-		try{
-			const update = await this.api.reject(this.session.user,this.id,new Date().toISOString(),this.rejectControl.value);
-			this.state = {status:'loaded',data:update};
+		try {
+			const update = await this.api.reject(this.session.user, this.id, new Date().toISOString(), this.rejectControl.value);
+			this.state = { status: 'loaded', data: update };
 			this.rejectControl.reset();
-		}catch(err){
+		} catch (err) {
 			this.actionError = (err as Error).message;
-		}finally{
-			this.submitting = false
+		} finally {
+			this.submitting = false;
 		}
 	}
 }
