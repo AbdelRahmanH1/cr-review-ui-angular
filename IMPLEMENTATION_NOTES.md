@@ -6,7 +6,7 @@
 ## 1. What I changed
  ## task 1
  - diff misclassification in **diff.ts**: The function only checked unitPrice to decide whether a line had changed. I added quantity to the comparison because changes in quantity should also count as a change.
-
+ - Approve/Reject permissions in cr-detail.component.ts: The buttons only checked the CR status, so read-only users (cr_r_o) could still approve pending CRs. I updated both getters to also check canApprovePolicy from common/permissions.ts. I used the same permission for Reject because there is no separate reject permission.
 
 
 ## 2. Component & state model
